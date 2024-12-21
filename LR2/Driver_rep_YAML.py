@@ -1,6 +1,6 @@
 import yaml
 
-class DriverRepYAML:
+class Driver_Rep_YAML:
     def __init__(self, yaml_file):
         self.yaml_file = yaml_file
         self.data = self._read()
