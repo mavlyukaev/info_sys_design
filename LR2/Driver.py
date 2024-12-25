@@ -86,6 +86,47 @@ class Driver(BaseDriver):
             self.get_phone_number(),
             self.get_experience()
         )
+        
+    # to_dict: преобразует существующий объект в словарь, используя его атрибуты
+    def to_dict(self):
+        return {
+            "driver_id": self.get_driver_id(),
+            "last_name": self.get_last_name(),
+            "first_name": self.get_first_name(),
+            "patronymic": self.get_patronymic(),
+            "phone_number": self.get_phone_number(),
+            "experience": self.get_experience(),
+            "birthday": self.get_birthday(),
+            "driver_license": self.get_driver_license(),
+            "vehicle_title": self.get_vehicle_title(),
+            "insurance_policy": self.get_insurance_policy(),
+            "license_plate": self.get_license_plate(),
+        }
+        
+    # from_dict: создает новый объект из словаря, вызывая конструктор класса
+    @classmethod
+    def from_dict(cls, data):
+        return cls(
+            last_name=data["last_name"],
+            first_name=data["first_name"],
+            patronymic=data["patronymic"],
+            phone_number=data["phone_number"],
+            experience=data["experience"],
+            birthday=data["birthday"],
+            driver_license=data["driver_license"],
+            vehicle_title=data["vehicle_title"],
+            insurance_policy=data["insurance_policy"],
+            license_plate=data["license_plate"],
+            driver_id=data.get("driver_id")
+        )
+    
+    def __eq__(self, other):
+        if not isinstance(other, Driver):
+            return False
+        return self.get_phone_number() == other.get_phone_number()  
+
+    def __hash__(self):
+        return hash(self.get_phone_number())
 
     # Геттеры
     def get_birthday(self):
