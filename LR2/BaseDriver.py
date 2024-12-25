@@ -66,8 +66,8 @@ class BaseDriver:
     
     # Сеттеры
     def set_driver_id(self, driver_id):
-        if not self.validate_driver_id(driver_id):
-            raise ValueError("ID должен быть положительным числом.")
+        if driver_id is not None and not self.validate_driver_id(driver_id):
+            raise ValueError("ID должен быть положительным числом.") 
         self.__driver_id = driver_id
 
     def set_last_name(self, last_name):
