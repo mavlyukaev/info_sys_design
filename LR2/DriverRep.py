@@ -1,6 +1,7 @@
 import json
 import yaml
 from Driver import Driver
+from DriverRepDB import DriverRepDB
 
 class DriverRep:
     def __init__(self, file_path):
@@ -102,3 +103,34 @@ class DriverRepYAML(DriverRep):
     def write(self):
         with open(self.file_path, 'w', encoding='utf-8') as file:
             yaml.dump([driver.to_dict() for driver in self.data], file, default_flow_style=False, allow_unicode=True)
+            
+class DriverRepDBAdapter(DriverRep):
+    def __init__(self, db_path):
+        self.driver_rep_db = DriverRepDB(db_path)
+
+    def read(self):
+        return [
+            self.driver_rep_db.get_by_id(driver_id)
+            for driver_id in range(1, self.driver_rep_db.get_count() + 1)
+        ]
+
+    def write(self):
+        pass
+
+    def get_by_id(self, driver_id):
+        return self.driver_rep_db.get_by_id(driver_id)
+
+    def get_k_n_short_list(self, k, n):
+        return self.driver_rep_db.get_k_n_short_list(k, n)
+
+    def add(self, driver):
+        return self.driver_rep_db.add(driver)
+
+    def update_by_id(self, driver_id, new_driver):
+        return self.driver_rep_db.update_by_id(driver_id, new_driver)
+
+    def delete_by_id(self, driver_id):
+        return self.driver_rep_db.delete_by_id(driver_id)
+
+    def get_count(self):
+        return self.driver_rep_db.get_count()
