@@ -59,6 +59,25 @@ class DatabaseManager:
 class DriverRepDB:
     def __init__(self, db_path):
         self.db = DatabaseManager(db_path)
+        
+    def get_all_drivers(self):
+        query = "SELECT * FROM drivers"
+        rows = self.db.fetchall(query)
+        return [
+            Driver.from_dict({
+                "driver_id": row[0],
+                "last_name": row[1],
+                "first_name": row[2],
+                "patronymic": row[3],
+                "phone_number": row[4],
+                "experience": row[5],
+                "birthday": row[6],
+                "driver_license": row[7],
+                "vehicle_title": row[8],
+                "insurance_policy": row[9],
+                "license_plate": row[10],
+            }) for row in rows
+        ]
 
     def get_by_id(self, driver_id):
         query = "SELECT * FROM drivers WHERE driver_id = ?"
